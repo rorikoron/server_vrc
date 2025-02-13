@@ -1,0 +1,10 @@
+# Environment files
+.env
+.env.*
+
+# Node modules
+node_modules/
+
+# Specific JSON files
+cookies.json
+Tokenstore.json
