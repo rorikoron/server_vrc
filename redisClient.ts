@@ -8,7 +8,7 @@ class RedisClient{
         if(!this.instace){
             this.instace = new Redis({
                 host: "localhost", // host of redis
-                port: 8001, // port of redis
+                port: 6379, // port of redis
                 tls: {} // TODO: ? whats
             })
         }

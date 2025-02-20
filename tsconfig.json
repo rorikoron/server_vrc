@@ -7,6 +7,8 @@
     "strict": true,
     "esModuleInterop": true,
     "typeRoots": ["./node_modules/types", "src/@types"],
+    "experimentalDecorators": true,  // デコレータを有効化
+    "emitDecoratorMetadata": true,   // メタデータを発行する
   },
   "include": ["src/**/*.ts", "src/@types/*.d.ts"],
   "exclude": ["node_modules"]
