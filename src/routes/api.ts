@@ -27,17 +27,17 @@ const authVRC = async (req: Request, res: Response, options?: ConstructorParamet
         })
     } catch (e) {
         if (e instanceof EmailOtpRequired) {
-            res.status(200).json({
-                status: 'eotp',
+            res.status(401).json({
+                mfaType: 'eotp',
                 message: 'Requires EmailOTP code, Re-send with the code'
             });
         } else if (e instanceof TOTPRequired) {
-            res.status(200).json({
-                status: 'totp',
+            res.status(401).json({
+                mfaType: 'totp',
                 message: 'Requires TOTP code, Re-send with the code'
             })
         } else {
-            res.status(500).json({
+            res.status(403).json({
                 message: 'invalid username/password'
             })
         }
@@ -45,19 +45,33 @@ const authVRC = async (req: Request, res: Response, options?: ConstructorParamet
 };
 
 // accessing via http://localhost:8000/api/auth
-router.get('/auth', async (req: Request, res: Response) => {
+router.post('/auth', async (req: Request, res: Response) => {
+    const { eotp, totp } = req.body;
+    const option = eotp ? { EmailOTPCode: eotp } : totp ? { TOTPCode: totp } : {}; 
+
     try{
-        authVRC(req, res);
+        authVRC(req, res, option);
     }catch(e){
 
     }
 });
-router.post('/auth/eotp', async (req: Request, res: Response) => {
-    const code : number = req.body?.code;
-    try{
-        authVRC(req, res, {EmailOTPCode: code.toString()});
-    }catch(e){
 
+router.post('/auth/verify', async (req: Request, res: Response) => {
+    try{
+        if(req.session && req.session.verifiedAPI){
+            res.status(200).json({
+                message: 'API has verified'
+            })
+            return;
+        }
+
+        res.status(401).json({
+            message: 'API has not verified'
+        })
+    }catch(e){
+        res.status(500).json({
+            message: 'Internal Server Error'
+        })
     }
 })
 

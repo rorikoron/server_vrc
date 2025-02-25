@@ -6,10 +6,10 @@
     "rootDir": "./",
     "strict": true,
     "esModuleInterop": true,
-    "typeRoots": ["./node_modules/types", "src/@types"],
-    "experimentalDecorators": true,  // デコレータを有効化
-    "emitDecoratorMetadata": true,   // メタデータを発行する
+    "typeRoots": ["./node_modules/types", "src/global"],
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
   },
-  "include": ["src/**/*.ts", "src/@types/*.d.ts"],
+  "include": ["src/**/*.ts", "src/global/*.d.ts"],
   "exclude": ["node_modules"]
 }

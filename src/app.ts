@@ -4,7 +4,6 @@ import express, { Request, Response } from 'express';
 import cors from 'cors';
 import session from 'express-session';
 import apiRouter from './routes/api'
-import RedisClient from '../redisClient';
 import pgSession from "connect-pg-simple";
 import { pgPool, startDatabase } from "./database";
 import { AppDataSource } from "./database";
